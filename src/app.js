@@ -60,6 +60,7 @@ app.get('/weather', (req,res)=>{
 
         forecast(latitude,longitude, (error, forecastData)=>{
             if(error){
+                
                 return res.send({
                     error: "Invalid lat and long"
                 })
