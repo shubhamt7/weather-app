@@ -29,19 +29,6 @@ app.get('', (req,res)=>{
     })
 })
 
-app.get('/about',(req,res)=>{
-    res.render('about',{
-        title: "About Me",
-        name: "Shubham Thind"
-    })
-})
-
-app.get('/help',(req,res)=>{
-    res.render('help',{
-        title: "Need Help?",
-        name: "Shubham Thind"
-    })
-})
 
 app.get('/weather', (req,res)=>{
     const address= req.query.address
@@ -75,14 +62,6 @@ app.get('/weather', (req,res)=>{
     })
 })
 
-
-app.get('/help/*',(req,res)=>{
-    res.render('404',{
-        title: '404',
-        info:"Help article not found",
-        name: "Shubham Thind"
-    })
-})
 
 app.get('*',(req,res)=>{
     res.render('404',{
