@@ -1,20 +1,44 @@
 const request= require('request')
 
+const api_key = "1fdb1a35da62119aff5bd2ce4d4d301e"
+
+const fahrenheitToCelsius = (temp) => {
+    const celsius = temp - 273.15;
+    return celsius.toFixed(1) + ' °C'
+}
+
+const getWeatherType = (weather) => {
+    if(weather.includes('snow'))
+        return 'snowy';
+    if(weather.includes('cloud'))
+        return 'cloudy';
+    if(weather.includes('rain'))
+        return 'rainy';
+    if(weather.includes('sun'))
+        return 'sunny'
+    
+    return 'clear';
+}
 
 const forecast=(lat,long,callback)=>{
-    const url="https://api.darksky.net/forecast/14b0c5aa4a381a623d31665628a4b5b7/"+lat+","+long+"?units=si"
+    console.log(lat, long, callback);
+    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${api_key}`
 
     request({url, json: true},(error, {body} )=>{
         if(error){
-            callback("Unable to connect to weather services", undefined)
+            callback("Unable to connect to weather services", undefined, undefined)
         }else if(body.error){
-            callback("Unable to find location", undefined)
+            callback("Unable to find location", undefined, undefined)
         }else{
-            const summary= body.daily.data[0].summary
-            const temp= body.hourly.data[0].temperature
-            const rainProbability= body.daily.data[0].precipProbability*100
-            const forecastResult= summary + " It is currently "+ temp +" degrees temperature out there. There is "+ rainProbability+"% chance of rain."
-            callback(undefined, forecastResult)
+            const weather = body.weather[0].description;
+            console.log(weather)
+            const temperatureActual = fahrenheitToCelsius(body.main.temp);
+            const humidity = body.main.humidity;
+            let weatherType = getWeatherType(weather.toLowerCase());
+            weatherType = weatherType.charAt(0).toUpperCase() + weatherType.slice(1);
+            
+            const summary = `Summary - ${weatherType}, Temp : ${temperatureActual}, Humidity : ${humidity}`;
+            callback(undefined, summary, weatherType)
         }
     })
 

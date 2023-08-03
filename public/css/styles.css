@@ -54,14 +54,14 @@ body{
 .app-name{
     color: transparent;
     font-family: 'Quicksand', sans-serif;
-    animation: fadein 3s ease-in;
+    animation: fadein 1s ease-in;
     animation-fill-mode: forwards;
 }
 
 .tagline{
     color: transparent;
     font-family: 'Quicksand', sans-serif;
-    animation: fadein 3s ease-in;
+    animation: fadein 1s ease-in;
     animation-fill-mode: forwards;
 }
 
